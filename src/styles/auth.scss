@@ -1,0 +1,71 @@
+@import './variables.scss';
+
+.auth-page{
+    padding: 2em 0;
+    height: convert(100vh,em) - calc($default-padding);
+    display: grid;
+    place-items: center;
+}
+.auth-container{
+    min-width: 400px;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.form-header{
+    display: grid;
+    place-items: center;
+    margin-bottom: 2em;
+}
+.form-container{
+    margin: 1em 0;
+}
+.form-container label{
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+    font-size: smaller;
+}
+.form-container input{
+    height: 40px;
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 7px;
+    border: 1.5px solid black;
+    font-weight: 500;
+
+
+    &:focus{
+        border: 2px solid black;
+    }
+    &::placeholder{
+        font-size: smaller;
+    }
+
+}
+button{
+    cursor: pointer;
+}
+.form-container button{
+    margin: 1em 0;
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+    border: none;
+    background-color: $primary-color;
+    color: white;
+    font-weight: 500;
+}
+.form-footer{
+    display: grid;
+    place-items: center;
+    margin-top: 2em;
+}
+.form-footer p{
+    font-size: small;
+}
+.form-footer a{
+ font-weight: 600;
+ color: $primary-color;
+}
+
