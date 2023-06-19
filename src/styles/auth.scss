@@ -1,71 +1,138 @@
-@import './variables.scss';
+@import "./variables.scss";
 
-.auth-page{
-    padding: 2em 0;
-    height: convert(100vh,em) - calc($default-padding);
-    display: grid;
-    place-items: center;
+.auth-page {
+  padding: 2em 0;
+  height: convert(100vh, em) - calc($default-padding);
+  display: grid;
+  place-items: center;
 }
-.auth-container{
-    min-width: 400px;
-    padding: 1em;
-    border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+.auth-container {
+  min-width: 400px;
+  //   padding: $default-padding;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.form-header{
-    display: grid;
-    place-items: center;
-    margin-bottom: 2em;
+.form-header {
+  display: grid;
+  place-items: center;
 }
-.form-container{
-    margin: 1em 0;
+
+#register-auth-container .form-container{
+  margin:0.5em 0;
 }
-.form-container label{
-    display: block;
-    margin-bottom: 0.5em;
-    font-weight: 500;
+.form-container {
+  margin: 1em 0;
+}
+.form-container label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  font-size: smaller;
+  color: inherit;
+}
+.form-container input {
+  height: 40px;
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 7px;
+  border: 1.5px solid black;
+  font-weight: 500;
+
+  &:focus {
+    border: 2px solid black;
+  }
+  &::placeholder {
     font-size: smaller;
+  }
 }
-.form-container input{
-    height: 40px;
-    width: 100%;
-    padding: 0.5em;
-    border-radius: 7px;
-    border: 1.5px solid black;
-    font-weight: 500;
+button {
+  cursor: pointer;
+}
+.form-header,
+.form-footer {
+  padding: $default-padding $default-padding;
+}
+.auth-container .form-container {
+  padding: $default-padding/3 $default-padding;
+}
+.icon-container {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.form-header .icon-container {
+  background-color: $secondary-color;
+  color: white;
+  width: 50px;
+  height: 50px;
 
-
-    &:focus{
-        border: 2px solid black;
-    }
-    &::placeholder{
-        font-size: smaller;
-    }
-
+  i {
+    font-size: 1.5em;
+  }
 }
-button{
-    cursor: pointer;
+.form-header p{
+  font-size: 0.8em;
+  font-weight: 600;
 }
-.form-container button{
-    margin: 1em 0;
-    width: 100%;
-    height: 40px;
-    border-radius: 7px;
-    border: none;
-    background-color: $primary-color;
-    color: white;
-    font-weight: 500;
+.form-header em{
+  color: $secondary-color;
+  text-decoration: none;
 }
-.form-footer{
-    display: grid;
-    place-items: center;
-    margin-top: 2em;
+.form-header-title {
+  margin-top: 0.5em;
+  font-size: 1.2em;
 }
-.form-footer p{
-    font-size: small;
+.form-container button {
+  width: 100%;
+  height: 40px;
+  border-radius: 7px;
+  border: none;
+  background-color: $primary-color;
+  color: white;
+  font-weight: 500;
 }
-.form-footer a{
- font-weight: 600;
- color: $primary-color;
+.form-footer {
+  display: grid;
+  place-items: center;
+  margin-top: 2em;
 }
-
+.form-footer p {
+  font-size: small;
+}
+.form-footer a {
+  font-weight: 600;
+  color: $primary-color;
+}
+.form-error {
+  color: red;
+  margin: 0.2em 0;
+  font-size: small;
+}
+.auth-info-container {
+  padding: 1em;
+  font-size: small;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  i {
+    display: inline;
+    margin-right: $default-padding/2;
+  }
+}
+.auth-error {
+  background-color: rgba(255, 0, 0, 0.122);
+  color: red;
+}
+.auth-success {
+  background-color: rgba(0, 128, 0, 0.193);
+  color: green;
+}
+.form_error {
+  color: red;
+}
+.error-border{
+  border: 2px solid red;
+}
+.success-border{
+  border: 2px solid green;
+}

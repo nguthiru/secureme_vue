@@ -3,6 +3,8 @@ import HomeView from "../views/HomeView.vue";
 import AuthView from "../views/AuthView.vue";
 import LoginView from "../views/auth/LoginView.vue";
 import RegisterView from "../views/auth/RegisterView.vue";
+import DashView from "../views/DashboardView.vue";
+import VerifyEmailView from "../views/auth/VerifyEmail.vue";
 const routes = [
   {
     path: "/",
@@ -16,7 +18,18 @@ const routes = [
     children: [
       { path: "register/", name: "register", component: RegisterView },
       { path: "login/", name: "login", component: LoginView },
+      {
+        path: "email/verify/",
+        name: "verify_email",
+        component: VerifyEmailView,
+        props: true,
+      },
     ],
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: DashView,
   },
   {
     path: "/about",

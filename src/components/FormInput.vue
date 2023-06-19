@@ -11,7 +11,7 @@ export default{
 
     name: 'FormInput',
     props: [
-    'error','label','placeholder','type'
+    'modelValue','error','label','placeholder','type'
     ],
     computed:{
       
