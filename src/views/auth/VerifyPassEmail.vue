@@ -22,7 +22,7 @@
             <button type="submit" id="verify-email-button" @click="activate">
                 <LoadingButton :loading="loading">
 
-                    Activate Account
+                    Verify Code
                 </LoadingButton>
             </button>
         </div>
@@ -85,12 +85,15 @@ export default {
                 formData.append('code', this.code);
                 formData.append('email', this.email);
 
-                this.$axios.post('auth/activate/email/', formData).then(() => { 
+                this.$axios.post('auth/password/reset/verify/', formData).then((res) => { 
                 
                     this.successful=true;
                     this.loading = false;
-                    toast.success("Your account has been activated");
-                    this.$router.replace({name:'login'})
+                    toast.success("Success");
+                    this.$router.replace({name:'password_reset',params:{
+                        'token': res.data.grant_token,
+                        "email":res.data.email
+                    }})
                 }).catch(e => { console.log(e);
                     if(e.response){
                         this.code_error = e.response.data.error;

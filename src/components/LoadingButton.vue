@@ -15,7 +15,12 @@ export default {
     components: {
         Loader
     },
-    props: ['load']
+    props: {
+        load: {
+            type: Boolean,
+            default: false
+        }
+    }
 }
 
 </script>

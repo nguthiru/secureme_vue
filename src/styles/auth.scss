@@ -136,3 +136,13 @@ button {
 .success-border{
   border: 2px solid green;
 }
+
+.forgot-password-text{
+  font-size: smaller;
+  font-weight: 500;
+  
+  a{
+    color: $primary-color;
+    font-weight: 600;
+  }
+}

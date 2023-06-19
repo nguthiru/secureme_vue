@@ -13,6 +13,7 @@
     "vue": "^3.2.13",
     "vue-pincode-input": "^0.4.0",
     "vue-router": "^4.0.3",
+    "vue-toastification": "^2.0.0-rc.5",
     "vue-verification-code-input": "^1.0.0",
     "vue3-pincode-input": "^0.0.1",
     "vuex": "^4.0.0"

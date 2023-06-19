@@ -5,6 +5,9 @@ import LoginView from "../views/auth/LoginView.vue";
 import RegisterView from "../views/auth/RegisterView.vue";
 import DashView from "../views/DashboardView.vue";
 import VerifyEmailView from "../views/auth/VerifyEmail.vue";
+import PassResetEmailView from "../views/auth/ResetPassEmail.vue";
+import PassResetCodeView from "../views/auth/VerifyPassEmail.vue";
+import PasswordResetView from "../views/auth/PasswordReset.vue";
 const routes = [
   {
     path: "/",
@@ -16,14 +19,38 @@ const routes = [
     name: "auth",
     component: AuthView,
     children: [
-      { path: "register/", name: "register", component: RegisterView },
-      { path: "login/", name: "login", component: LoginView },
+      { 
+        path: "register/",
+        name: "register",
+        component: RegisterView
+       },
+      { 
+        path: "login/", 
+        name: "login", 
+        component: LoginView 
+      },
       {
         path: "email/verify/",
         name: "verify_email",
         component: VerifyEmailView,
         props: true,
       },
+      {
+        path: "password/reset/email",
+        name: "password_reset_email",
+        component: PassResetEmailView,
+      },
+      {
+        path: "password/reset/code",
+        name: "password_reset_code",
+        component: PassResetCodeView
+      },
+      {
+        path: "password/reset/code/:token",
+        name: "password_reset",
+        component: PasswordResetView,
+        props: true
+      }
     ],
   },
   {

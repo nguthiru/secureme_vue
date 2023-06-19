@@ -1,6 +1,6 @@
 <template>
     <div class="auth-container" id="register-auth-container">
-        <div class="row form-header">
+        <div class="form-header">
             <div class="icon-container">
                 <i class="fas fa-user icon"></i>
             </div>
@@ -62,7 +62,9 @@
 <script>
 import LoadingButton from '@/components/LoadingButton.vue'
 import { mapActions } from 'vuex';
+import { useToast,} from 'vue-toastification'
 
+var toast = useToast();
 export default {
 
     name: 'LoginVue',
@@ -86,6 +88,9 @@ export default {
     },
     computed: {
         isEmailValid() {
+            if(this.email==null){
+                return true;
+            }
             // Email validation regular expression pattern
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(this.email);
@@ -121,7 +126,6 @@ export default {
     methods: {
         ...mapActions(['saveEmail']),
         setLoading() {
-            console.log("LOADING")
             this.loading = !this.loading;
         },
         validate() {
@@ -162,7 +166,6 @@ export default {
         },
 
         register() {
-            this.setLoading()
             let form_valid = this.validate()
             if (form_valid) {
                 var data = new FormData();
@@ -171,11 +174,13 @@ export default {
                 data.append('username', this.username);
                 data.append('password1', this.password1);
                 try {
-                    this.$axios.post('auth/register/', data).then((response) => {
+                    this.setLoading()
+                    this.$axios.post('auth/register/', data).then(() => {
                         this.login_successful = true
                         this.saveEmail(this.email)
+                        this.setLoading()
+                        toast.success("Account creation successful. Verify account")
                         this.$router.replace({ 'name': 'verify_email', })
-                        console.log(response)
                     }).catch(e => {
                         console.log(e.response.data)
                         if (e.response) {
@@ -193,8 +198,6 @@ export default {
 
 
             }
-            this.setLoading()
-
 
         }
     }
