@@ -1,5 +1,6 @@
 @import './auth.scss';
 @import './variables.scss';
+@import './modal.scss';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 *{
     padding: 0;
@@ -8,7 +9,7 @@
     font-family: 'Inter',sans-serif;
 }
 
-body{
+#app{
     padding: $default-padding;
 }
 a{
@@ -35,4 +36,85 @@ button .fulfilling-bouncing-circle-spinner{
 }
 .fit-content{
     width: fit-content;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.primary-btn{
+    padding: .7em 2em;
+    color:white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 7px;
+    font-weight: 500;
+}
+.auth-links .auth-link{
+    margin-left: 3em;
+}
+.auth-link{
+    color:$primary-color;
+    font-size: 0.9em;
+    font-weight: bold;
+
+} 
+.user-nav-container{
+    display: flex;
+    align-items: center;
+    p{
+        font-size: 0.9em;
+        font-weight: 500;
+        color: $primary-color;
+    }
+    .user-nav-info{
+        margin-top: 0.2em;
+        font-size: small;
+        color: red;
+    }
+}
+.warning{
+    color: rgb(240, 240, 22)
+}
+.error{
+    color: red;
+}
+i{
+    margin-right: 0.5em;
+}
+.user-nav-info{
+    font-size: smaller;
+    text-align: center;
+}
+.row{
+    align-items: center;
+}
+.medium-icon{
+    width: 1em;
+    height: 1em;
+
+}
+#nav-logout-icon{
+    cursor:pointer;
+}
+#nav-logout-container{
+    margin-left: $default-padding*2;
+    a{
+        color: $secondary-color;
+        margin-left: $default-padding/2;
+    }
+}
+#nav-logout-icon{
+    background-color: $secondary-color;
+    padding: .7em;
+    
+}
+.error-btn{
+    padding: 1em;
+    border: none;
+    outline:none;
+    border-radius: 7px;
+    background-color: red;
+    color: white;
 }

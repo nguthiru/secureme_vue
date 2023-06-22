@@ -18,12 +18,7 @@
             <i class="fa fa-check" aria hidden="true"></i>
             <p>Account creation successful. Verify account</p>
         </div>
-        <div class="form-container" :class="{ form_error: !isUsernameValid }">
-            <label for="label">Username</label>
-            <input type="email" v-model="username">
-            <p class="form-error" v-if="!isUsernameValid">This field is required</p>
-            <p class="form-error" v-if="username_error">{{ username_error }} </p>
-        </div>
+        
         <div class="form-container" :class="{ form_error: user }">
             <label for="label">Email Address</label>
             <input type="email" v-model="email">
@@ -171,7 +166,6 @@ export default {
                 var data = new FormData();
                 data.append('email', this.email);
                 data.append('password2', this.password2);
-                data.append('username', this.username);
                 data.append('password1', this.password1);
                 try {
                     this.setLoading()
@@ -182,7 +176,7 @@ export default {
                         toast.success("Account creation successful. Verify account")
                         this.$router.replace({ 'name': 'verify_email', })
                     }).catch(e => {
-                        console.log(e.response.data)
+                        this.setLoading();
                         if (e.response) {
                             this.auth_error = e.response.data.error
                         }

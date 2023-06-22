@@ -8,6 +8,7 @@ import VerifyEmailView from "../views/auth/VerifyEmail.vue";
 import PassResetEmailView from "../views/auth/ResetPassEmail.vue";
 import PassResetCodeView from "../views/auth/VerifyPassEmail.vue";
 import PasswordResetView from "../views/auth/PasswordReset.vue";
+import ApprovalView from "../views/auth/ApprovalView.vue";
 const routes = [
   {
     path: "/",
@@ -50,6 +51,11 @@ const routes = [
         name: "password_reset",
         component: PasswordResetView,
         props: true
+      },
+      {
+        path:"approval/request",
+        name: "approval_request",
+        component: ApprovalView
       }
     ],
   },

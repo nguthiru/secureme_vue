@@ -11,10 +11,7 @@
             <p>{{ auth_error }}</p>
         </div>
 
-        <div v-if="login_successful" class="auth-info-container auth-success">
-            <i class="fa fa-check" aria hidden="true"></i>
-            <p>Proceed to code verification.</p>
-        </div>
+        
         <div class="form-container" :class="{ form_error: !isEmailValid }">
             <label for="label">Email Address</label>
             <input type="email" v-model="email">
@@ -42,12 +39,14 @@
 
 <script>
 import { mapActions } from 'vuex';
-
+import LoadingButton from '@/components/LoadingButton.vue';
 import { useToast,} from 'vue-toastification'
 
 var toast = useToast();
 export default {
-
+    components:{
+        LoadingButton
+    },
     data() {
         return {
             email: null,
@@ -70,12 +69,12 @@ export default {
     methods: {
         ...mapActions(['saveEmail']),
         sendPasswordResetEmail() {
-            if (this.email != null && this.isEmailValid()) {
+            if (this.email != null && this.isEmailValid) {
 
+                this.loading = true;
 
                 let formData = new FormData()
                 formData.append('email', this.email)
-                this.loading = true;
                 this.$axios.post('auth/password/reset/email/', formData).then(res => {
                     this.saveEmail(res.data.email)
                     this.loading = false;

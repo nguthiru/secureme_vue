@@ -151,9 +151,13 @@ export default {
                         this.login_successful = true
                         localStorage.setItem('token',response.data.token)
                         toast.success("Login Successful");
-                        this.$router.replace({'name':'dashboard'})
+                        this.$store.dispatch('populateUser').then(()=>{
+
+                            this.$router.replace({'name':'dashboard'})
+                        })
                         this.setLoading()
                     }).catch(e => {
+                        this.setLoading()
                         if (e.response) {
                             this.auth_error = e.response.data.error
                         }

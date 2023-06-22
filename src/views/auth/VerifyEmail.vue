@@ -14,7 +14,7 @@
             <p>{{success_message}}</p>
         </div>
         <div class="form-container">
-            <PincodeInput v-model="code" :digits="7" :successClass="{error_border:!successful,success_border:successful}"/>
+            <PincodeInput v-model="code" :digits="7"/>
             <p class="form-error">{{ code_error }}</p>
         </div>
 
@@ -88,8 +88,8 @@ export default {
                 this.$axios.post('auth/activate/email/', formData).then(() => { 
                 
                     this.successful=true;
-                    this.loading = false;
                     toast.success("Your account has been activated");
+                    this.loading = false;
                     this.$router.replace({name:'login'})
                 }).catch(e => { console.log(e);
                     if(e.response){
@@ -110,7 +110,6 @@ export default {
             this.$axios.post('auth/activate/email/resend/',formData).then(() => {
                 this.success_message="Activation code has been sent to your email";
             }).catch(e => {
-                console.log(e.response.data)
                 if(e.response){
                     this.code_error = e.response.data.error;
                 }
