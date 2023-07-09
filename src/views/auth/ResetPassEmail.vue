@@ -3,7 +3,7 @@
         <div class="form-header">
             <h3>Reset Password</h3>
 
-            <p>Enter your accounts email address</p>
+            <p>A code will be sent to your email to allow you to reset your password</p>
         </div>
         <div v-if="auth_error != null" class="auth-info-container auth-error row">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -77,9 +77,10 @@ export default {
                 formData.append('email', this.email)
                 this.$axios.post('auth/password/reset/email/', formData).then(res => {
                     this.saveEmail(res.data.email)
+                    localStorage.setItem('temp_email',this.email)
                     this.loading = false;
                     toast.success("Password reset code has been sent to your email");
-                    this.$router.push({ name: "password_reset_code" })
+                    this.$router.replace({ name: "password_reset_code" })
 
                 }).catch(e => {
                     this.loading = false;
@@ -91,6 +92,11 @@ export default {
                     }
                 })
             }
+        }
+    },
+    mounted(){
+        if(this.email==null){
+            this.email = localStorage.getItem('temp_email')
         }
     }
 }

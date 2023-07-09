@@ -12,13 +12,11 @@ export default {
     },
     
     mounted(){
-        if(this.isAuthenticated && this.isApproved){
+        if(this.isAuthenticated && !this.isApproved){
             // will redirect to respective user dashboard
-            console.log('redirecting');
-        }
-        else{
             this.$router.replace({name:'approval_request'});
         }
+        
     }
 }
 </script>

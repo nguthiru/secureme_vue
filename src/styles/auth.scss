@@ -1,7 +1,7 @@
 @import "./variables.scss";
 
 .auth-page {
-  padding: 2em 0;
+  padding: 1em 0;
   height: convert(100vh, em) - calc($default-padding);
   display: grid;
   place-items: center;
@@ -30,7 +30,7 @@
   font-size: smaller;
   color: inherit;
 }
-.form-container input {
+.form-container input,select {
   height: 40px;
   width: 100%;
   padding: 0.5em;
@@ -144,5 +144,52 @@ button {
   a{
     color: $primary-color;
     font-weight: 600;
+  }
+}
+.form-info{
+  color: grey;
+  font-size: 0.65em;
+  font-weight: 500;
+  margin-top: 0.5em;
+}
+.medium_image{
+  height: 6em;
+  
+}
+#pending_approval_image{
+  margin: 1em auto;
+  display: block;
+  
+}
+#approval-form .form-header{
+  display: flex;
+  justify-content: space-between;
+}
+#approval-form{
+  margin: 2em;
+}
+.tab_button{
+  border: none;
+  
+  width: max-content;
+  background-color: transparent;
+  font-size: 1em;
+  font-weight: 500;
+  color: grey;
+  cursor: pointer;
+  outline: none;
+  &::after{
+    content: "";
+    display: block;
+    width: auto;
+    height: 1.7px;
+    background-color: $primary-color;
+    transition: width 0.3s ease-in-out;
+  }
+  &.active{
+    color: $primary-color;
+   
+    font-weight: 600;
+
   }
 }

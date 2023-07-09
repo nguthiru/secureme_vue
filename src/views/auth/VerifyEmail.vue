@@ -36,7 +36,6 @@
 <script>
 import PincodeInput from 'vue3-pincode-input';
 import LoadingButton from '@/components/LoadingButton.vue'
-import { mapState} from 'vuex';
 import { useToast,} from 'vue-toastification'
 
 var toast = useToast();
@@ -58,7 +57,9 @@ export default {
 
     },
     computed:{
-        ...mapState(['email'])
+        email(){
+            return localStorage.getItem('temp_email')
+        }
     },
     methods: {
         isValid() {

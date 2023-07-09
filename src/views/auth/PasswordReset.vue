@@ -5,10 +5,17 @@
                 Reset Password
             </h3>
         </div>
+        <div v-if="auth_error != null" class="auth-info-container auth-error row">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+            <p>{{ auth_error }} </p>
+        </div>
 
         <div class="form-container" :class="{form_error:!isPassword1Valid}">
             <label for="label">New Password</label>
             <input type="password" v-model="password1" placeholder="8 characters or more">
+            <p class="form-info">Password should be 8 characters or more.</p>
+
             <p class="form-error" v-if="!isPassword1Valid">Password should be 8 characters or more </p>
         </div>
         <div class="form-container" :class="{form_error:!isPassword2Valid}">
@@ -60,7 +67,7 @@ export default {
     },
     methods: {
         resetPass() {
-            if(this.isPassword1Valid() && this.isPassword2Valid){
+            if(this.isPassword1Valid && this.isPassword2Valid){
 
             
             let formData = new FormData()
@@ -70,7 +77,8 @@ export default {
             this.$axios.post(`auth/password/reset/${this.$route.params.token}/`, formData).then(() => {
                 this.loading = false;
                 toast.success("Password reset successful");
-                this.$router.push({ name: "login" })
+                this.$router.replace({ name: "login" })
+                
             }).catch(e => {
                 this.loading = false;
                 if(e.response){

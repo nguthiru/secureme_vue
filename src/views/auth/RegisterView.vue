@@ -27,7 +27,8 @@
         </div>
         <div class="form-container" :class="{ form_error: !isPasswordValid }">
             <label for="label">Password</label>
-            <input type="password" v-model="password1" placeholder="Should be 8 characters or more">
+            <input type="password" v-model="password1">
+            <p class="form-info">Password should be 8 characters or more.</p>
             <p class="form-error" v-if="!isPasswordValid">Password should be 8 characters or more</p>
             <p class="form-error" v-if="password1_error != null || password1_error === ''">{{ password1_error }}</p>
         </div>
@@ -161,7 +162,7 @@ export default {
         },
 
         register() {
-            let form_valid = this.validate()
+            let form_valid = this.isEmailValid && this.isPasswordValid && this.password1===this.password2;
             if (form_valid) {
                 var data = new FormData();
                 data.append('email', this.email);
@@ -172,6 +173,7 @@ export default {
                     this.$axios.post('auth/register/', data).then(() => {
                         this.login_successful = true
                         this.saveEmail(this.email)
+                        localStorage.setItem('temp_email',this.email)
                         this.setLoading()
                         toast.success("Account creation successful. Verify account")
                         this.$router.replace({ 'name': 'verify_email', })
