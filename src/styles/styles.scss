@@ -118,3 +118,13 @@ i{
     background-color: red;
     color: white;
 }
+
+.flex-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.fit-content{
+    width: fit-content;
+  }
+@import './police.scss'

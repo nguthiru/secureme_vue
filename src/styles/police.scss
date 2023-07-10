@@ -1,0 +1,238 @@
+@import "./variables.scss";
+
+#police_app {
+  position: relative;
+}
+
+#police_aside {
+  position: absolute;
+  background-color: $secondary-color;
+  font-size: small;
+  right: -$default-padding;
+  top: 30vh;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.data_entry_card{
+  .form-container input{
+    border: none;
+    background-color: rgba(128, 128, 128, 0.256);
+  }
+}
+.side-nav {
+  background-color: $primary-color;
+  width: fit-content;
+  padding: $default-padding * 2;
+  margin-left: -$default-padding;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: grey;
+  position: absolute;
+  top: 30vh;
+  left: -$default-padding;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.side-nav-link {
+  margin: 2em 0;
+
+  &:hover {
+    color: white;
+  }
+}
+.router-link-exact-active .side-nav-link p {
+  color: $secondary-color;
+  fill: $secondary-color;
+  font-weight: 600;
+}
+.side-nav-icon svg,
+path {
+  fill: grey;
+  width: 2em;
+  height: 2em;
+  margin-right: 1em;
+}
+.router-link-exact-active .side-nav-link svg {
+  fill: $secondary-color;
+  width: 2.1em;
+  height: 2.1em;
+  path {
+    fill: $secondary-color;
+  }
+}
+.data_entry_page {
+  display: grid;
+  place-items: center;
+}
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 10px;
+}
+.data_entry_card {
+  padding: $default_padding;
+  width: fit-content;
+  margin: auto;
+  min-width: 750px;
+}
+
+.progress-indicator {
+  width: inherit;
+  background: #2193b0; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2193b0,
+    #6dd5ed
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2193b0,
+    #6dd5ed
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 10px;
+  margin-left: -$default-padding;
+  margin-right: -$default-padding;
+  margin-top: $default-padding/2;
+  margin-bottom: $default-padding/2;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.data_entry_footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.space-btn {
+  justify-content: space-between;
+}
+// .data_entry_footer button{
+// }
+.criminal_preview {
+  margin: 1em auto;
+  .row {
+    justify-content: center;
+  }
+  h4 {
+    margin-left: 1em;
+  }
+}
+
+.profile-photo {
+  border-radius: 50%;
+}
+.small {
+  width: 3em;
+  height: 3em;
+}
+.data_entry_footer {
+  margin-top: 1em;
+
+  &::before {
+    content: "";
+    margin-bottom: 1em;
+    display: block;
+    width: auto;
+    height: 5px;
+    background-color: red;
+  }
+}
+
+.crime-card {
+  padding: $default-padding/1.3 $default-padding;
+  display: grid;
+  place-items: center;
+  font-size: small;
+  font-weight: 600;
+  background-color: $secondary-color;
+  color: white;
+}
+.crime-card-detach{
+  margin-top: 0.5em;
+  color: red;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  padding: 0 auto;
+}
+
+.smaller {
+  width: 1.5em;
+  height: 1.5em;
+}
+.add-icon-bordered {
+  border: 2px solid blue;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.crime-selector {
+  padding: $default-padding;
+  font-size: small;
+  color: grey;
+
+  h3 {
+    font-size: 1em;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1em;
+  }
+  select {
+    font-size: small;
+    border: none;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+.row-start {
+  display: flex;
+}
+#crime-info {
+  margin: 1em 0;
+  p {
+    margin-right: 1em;
+  }
+}
+.text-btn {
+  width: fit-content;
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  border-radius: none;
+  cursor: pointer;
+  color: $primary-color;
+}
+#crime_nature_container {
+  margin: $default-padding/2 0;
+  gap: 20px;
+  .text-btn-container {
+    margin-left: $default-padding;
+    color: $primary-color;
+    cursor: pointer;
+  }
+}
+p[class="label"] {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  font-size: 0.93em;
+  color: inherit;
+}
+.header-content{
+  .back-btn{
+    margin: 2em -0.5em;
+    font-weight: 600;
+  }
+}
+.back-btn{
+  color: $primary-color;
+  cursor: pointer;
+  
+}
+.crime-selector{
+  .search-btn{
+    width: 20%;
+  }
+}

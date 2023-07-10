@@ -9,6 +9,8 @@ import PassResetEmailView from "../views/auth/ResetPassEmail.vue";
 import PassResetCodeView from "../views/auth/VerifyPassEmail.vue";
 import PasswordResetView from "../views/auth/PasswordReset.vue";
 import ApprovalView from "../views/auth/ApprovalView.vue";
+import PoliceView from "../views/police/HomeView.vue";
+import DataEntryView from "../views/police/DataEntry.vue";
 const routes = [
   {
     path: "/",
@@ -58,6 +60,18 @@ const routes = [
         component: ApprovalView
       }
     ],
+  },
+  {
+    path:"/police",
+    name: "police_view",
+    component: PoliceView,
+    children:[
+      {
+        path:'data/',
+        name: "police_data_entry",
+        component: DataEntryView
+      }
+    ]
   },
   {
     path: "/dashboard",
