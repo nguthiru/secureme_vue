@@ -26,36 +26,53 @@
 </template>
 
 <script>
+import { useToast, } from 'vue-toastification'
 
-export default{
+var toast = useToast();
+export default {
 
-    mounted(){
-        this.id_num=localStorage.getItem('id_num')
+    mounted() {
+        this.id_num = localStorage.getItem('id_num')
     },
-    methods:{
-        isValid(){
-            if(this.id_num!=null && this.id_num!==""){
+    methods: {
+        isValid() {
+            if (this.id_num != null && this.id_num !== "") {
                 return true
             }
             this.auth_error = "This Field is Required"
             return false
         },
-        
-        next(){
-            if(this.isValid()){
+
+        next() {
+            if (this.isValid()) {
                 //Do something 
+                this.$axios.get(`police/check_criminal/${this.id_num}/`).then(res => {
+                    let criminal_data = res.data
+                    this.$store.dispatch('police/setCriminal', criminal_data)
+                    this.$store.dispatch('police/setCriminalExisted')
+                    localStorage.setItem('id_num', this.id_num)
+                    this.$router.push(`?page=3`)
+                }).catch(err => {
+                    if (err.response.status === 404) {
+                        // toast.warning("Criminal not found. Add them")
+                        localStorage.setItem('id_num', this.id_num)
+
+                        this.$emit('next')
+                    }
+                    else {
+                        toast.error("An error has occured")
+                    }
+                })
                 //TODO: check whether criminal already exists if does skip
-                localStorage.setItem('id_num',this.id_num)
-                this.$emit('next')
             }
         }
     },
-    data(){
+    data() {
         return {
-            id_num:null,
-            auth_error:null
+            id_num: null,
+            auth_error: null
         }
     },
-    
+
 }
 </script>

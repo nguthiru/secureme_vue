@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
-
+import police from "./police"
 export default createStore({
   state: {
     email: "",
@@ -47,5 +47,7 @@ export default createStore({
 
     }
   },
-  modules: {},
+  modules: {
+    police
+  },
 });

@@ -11,10 +11,17 @@
                 </div>
                 <h4>Set Criminal Associations</h4>
                 <div class="criminal_preview">
+
                     <div class="row">
-                        <img v-if="preview_image" :src="preview_image" alt="Profile_Image" class="profile-photo small"
+                        <img v-if="getCriminal" :src="getCriminal.imageUrl" alt="Profile_Image" class="profile-photo small"
                             @change="pictureChange">
-                        <h4>{{ name }}</h4>
+                        <h5>{{ getCriminal.name }}</h5>
+                    </div>
+                    <div class="flex-wrap">
+                        <div class="card crime-card-simple" v-for="crime in getCrime.attached_crimes" :key="crime.id">
+                            {{ crime.name }}
+
+                        </div>
                     </div>
                 </div>
 
@@ -24,13 +31,23 @@
             </div>
         </div>
         <div class="data_entry_body">
-            
+
             <div class="container">
 
                 <p class="label">Accomplice </p>
                 <div class="flex-wrap" id="crime_nature_container">
-                    <div class="crime-card card fit-content default-padding" v-for="accomplice in accomplices" :key="accomplice.id">
+                    <div class="crime-card card fit-content default-padding" v-for="accomplice in accomplices"
+                        :key="accomplice.id">
                         {{ accomplice.name }}
+
+                        <div class="crime-card-detach">
+                            <div class="row" @click="detachAccomplice">
+                                <div class="small-icon">
+                                    <i class="fa fa-times" style="margin-left: 1em; cursor: pointer;"></i>
+                                </div>
+                                Detach
+                            </div>
+                        </div>
                     </div>
                     <div class="row text-btn-container" @click="asideContent = 'accomplice'">
                         <i class="fa fa-plus"></i>
@@ -53,7 +70,8 @@
     </div>
 
     <Teleport to="#police_aside" v-if="asideContent === 'accomplice'">
-        <AccompliceSelector @attachAccomplice="attachAccomplice"/>
+        <AccompliceSelector @attachAccomplice="attachAccomplice" :accomplices="accomplices"
+            @detachAccomplice="detachAccomplice" />
     </Teleport>
     <!-- <Teleport to="#police_aside" v-if="asideContent === 'victim'">
         <VictimSelector @victimAttach="victim" />
@@ -61,56 +79,57 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AccompliceSelector from './AccompliceSelector.vue'
 // import VictimSelector from './VictimSelector.vue'
 export default {
     components: {
-        AccompliceSelector
+        AccompliceSelector,
     },
 
     data() {
         return {
-            id: null,
-            name: null,
-            height: null,
-            age: null,
-            preview_image: null,
+
             asideContent: null,
             victims: [],
-            accomplices:[]
+            accomplices: []
         }
     },
     computed: {
-        getImageUrl() {
-            if (this.preview_image != null) {
-                return this.preview_image
-            }
-            return "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
-        }
+        ...mapGetters("police", ['getCriminal', 'getCrime']),
+        crimesCharged() {
+            return this.getCrime.attached_crimes.map(e => e.name).join(", ")
+        },
+
     },
     methods: {
         next() {
-            //save the accomplices as JSON to localStorage
-            localStorage.setItem('accomplices',JSON.stringify(this.accomplices))
+            let association_data = {
+                accomplices: this.accomplices
+            }
+            this.$store.dispatch('police/setAssociation',association_data)
             this.$emit('next')
         },
-        attachFields(){
-            let accomplices_json = localStorage.getItem('accomplices')
-            if(accomplices_json!=null){
-                this.accomplices = JSON.parse(accomplices_json)
-            }
-            else{
-                this.accomplices=[]
-            }
+        attachFields() {
+            // let accomplices_json = localStorage.getItem('accomplices')
+            // if(accomplices_json!=null){
+            //     this.accomplices = JSON.parse(accomplices_json)
+            // }
+            // else{
+            //     this.accomplices=[]
+            // }
         },
-        attachAccomplice(accomplice){
+        attachAccomplice(accomplice) {
             this.accomplices.push(accomplice)
 
+        },
+        detachAccomplice(e) {
+            this.accomplices = this.accomplices.filter(a => a.id != e.id)
         }
 
     },
 
-    mounted(){
+    mounted() {
         this.attachFields()
     }
 }

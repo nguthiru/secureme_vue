@@ -5,6 +5,7 @@
         <CriminalEntry v-if="getCurrentSection==2" @next="goToSection(3)"/>
         <CrimeEntry v-if="getCurrentSection==3" @next="goToSection(4)"/>
         <AssociationEntry v-if="getCurrentSection==4" @next="goToSection(5)"/>
+        <SummaryView v-if="getCurrentSection==5" @next="console.log('Push to backend')"/>
     </div>
 </template>
 
@@ -13,12 +14,14 @@ import CriminalEntryID from '@/components/police/IDEntry.vue'
 import CriminalEntry from '@/components/police/CriminalEntry.vue'
 import CrimeEntry from '@/components/police/CrimeEntry.vue'
 import AssociationEntry from '@/components/police/AssociationEntry.vue'
+import SummaryView from '@/components/police/SummaryView.vue'
 export default {
     components:{
         CriminalEntryID,
         CriminalEntry,
         CrimeEntry,
-        AssociationEntry
+        AssociationEntry,
+        SummaryView
     },
 
     computed:{

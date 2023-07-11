@@ -10,7 +10,7 @@
                     <p>Back</p>
                 </div>
                 <h4>Enter Criminal Details</h4>
-               <p class="form-error">{{ auth_error }}</p>
+                <p class="form-error">{{ auth_error }}</p>
             </div>
         </div>
         <div class="data_entry_body">
@@ -57,7 +57,9 @@
 </template>
 
 <script>
+// import { useToast,} from 'vue-toastification'
 
+// var toast = useToast();
 
 export default {
     components: {
@@ -69,19 +71,19 @@ export default {
             name: null,
             height: null,
             age: null,
-            preview_image:null,
-            auth_error:null
+            preview_image: null,
+            auth_error: null
         }
     },
     computed: {
         getImageUrl() {
-            if(this.preview_image!=null){
+            if (this.preview_image != null) {
                 return this.preview_image
             }
             return "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
         }
     },
-    mounted(){
+    mounted() {
         this.assignFields()
     },
     methods: {
@@ -94,30 +96,38 @@ export default {
             return false
         },
 
-        isValid(){
-            if(!this.isNullOrUndefined(this.id) && !this.isNullOrUndefined(this.name) && !this.isNullOrUndefined(this.age) && !this.isNullOrUndefined(this.height)){
+        isValid() {
+            if (!this.isNullOrUndefined(this.id) && !this.isNullOrUndefined(this.name) && !this.isNullOrUndefined(this.age) && !this.isNullOrUndefined(this.height)) {
                 return true
             }
-            this.auth_error="Fill in all fields"
+            this.auth_error = "Fill in all fields"
             return false
         },
         next() {
 
-            if(this.isValid()){
+            if (this.isValid()) {
                 //Save all the data to localstorage
-                localStorage.setItem('criminal_name',this.name)
-                localStorage.setItem('criminal_age',this.age)
-                localStorage.setItem('criminal_height',this.height)
-                localStorage.setItem('criminal_image',this.preview_image)
+                let imageUrl = "https://images.unsplash.com/photo-1551086188-51852b2e719d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJpc29uZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+
+
+                let criminal_data = {
+                    idNumber: this.id,
+                    name: this.name,
+                    dateOfBirth: this.age,
+                    height: this.height,
+                    imageUrl: imageUrl
+                }
+                this.$store.dispatch('police/setCriminal',criminal_data)
                 this.$emit('next')
+
             }
         },
-        assignFields(){
-            this.id= localStorage.getItem('id_num')
-            this.name= localStorage.getItem('criminal_name')
-            this.age= localStorage.getItem('criminal_age')
-            this.height= localStorage.getItem('criminal_height')
-            this.preview_image= localStorage.getItem('criminal_image')
+        assignFields() {
+            this.id = localStorage.getItem('id_num')
+            this.name = localStorage.getItem('criminal_name')
+            this.age = localStorage.getItem('criminal_age')
+            this.height = localStorage.getItem('criminal_height')
+            this.preview_image = localStorage.getItem('criminal_image')
         },
         pictureChange() {
             // console.log("HELLO")
@@ -131,6 +141,6 @@ export default {
             // };
         }
     },
- 
+
 }
 </script>

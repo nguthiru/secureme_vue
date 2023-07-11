@@ -9,14 +9,14 @@
                     <i class="fa fa-chevron-left"></i>
                     <p>Back</p>
                 </div>
-                <h4>Crime Details</h4>
                 <div class="criminal_preview">
                     <div class="row">
-                        <img v-if="preview_image" :src="preview_image" alt="Profile_Image" class="profile-photo small"
+                        <img v-if="getCriminal" :src="getCriminal.imageUrl" alt="Profile_Image" class="profile-photo small"
                             @change="pictureChange">
-                        <h4>{{ name }}</h4>
+                        <h5>{{ getCriminal.name}}</h5>
                     </div>
                 </div>
+                <h4>Crime Details</h4>
             </div>
         </div>
         <div class="data_entry_body">
@@ -63,6 +63,7 @@
 import CrimeSelector from './CrimeSelector.vue'
 import CrimeCard from './CrimeCard.vue'
 import { useToast, } from 'vue-toastification'
+import { mapGetters } from 'vuex';
 
 var toast = useToast();
 
@@ -73,9 +74,7 @@ export default {
 
     data() {
         return {
-            id: null,
-            name: null,
-            preview_image: null,
+         
             showAside: false,
             attachedCrimes: [],
             time: null,
@@ -83,12 +82,13 @@ export default {
         }
     },
     computed: {
-        getImageUrl() {
-            if (this.preview_image != null) {
-                return this.preview_image
-            }
-            return "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
-        }
+        ...mapGetters("police",['getCriminal','getCrime']),
+        // getImageUrl() {
+        //     if (this.preview_image != null) {
+        //         return this.preview_image
+        //     }
+        //     return "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
+        // }
     },
     methods: {
         //isValid method ensuring atleast there is an element in attachedCrimes and the rest are not null or ""
@@ -111,9 +111,12 @@ export default {
         next() {
             if (this.isValid()) {
                 //save everything to localstorage and jsonify the attached crimes
-                localStorage.setItem('attached_crimes', JSON.stringify(this.attachedCrimes))
-                localStorage.setItem('crime_time', this.time)
-                localStorage.setItem('crime_fatalities', this.fatalities)
+                let crime_data = {
+                    attached_crimes: this.attachedCrimes,
+                    time: this.time,
+                    fatalities: this.fatalities
+                }
+                this.$store.dispatch('police/setCrime',crime_data)
                 this.$emit('next')
             }
         },
@@ -146,16 +149,20 @@ export default {
         },
 
         assignFields() {
-            this.id = localStorage.getItem('id_num')
-            this.name = localStorage.getItem('criminal_name')
-            this.preview_image = localStorage.getItem('criminal_image')
-            let attached_crimes_json = localStorage.getItem('attached_crimes')
-            if(attached_crimes_json===null || attached_crimes_json===undefined){
-                attached_crimes_json="[]"
+            if(this.getCrime!=null){
+                let crime = this.getCrime
+                this.attachedCrimes = crime.attached_crimes
+                this.time = crime.time
+                this.fatalities = crime.fatalities
             }
-            this.attachedCrimes = JSON.parse(attached_crimes_json)
-            this.time = localStorage.getItem('crime_time')
-            this.fatalities = localStorage.getItem('crime_fatalities')
+            
+            // let attached_crimes_json = localStorage.getItem('attached_crimes')
+            // if(attached_crimes_json===null || attached_crimes_json===undefined){
+            //     attached_crimes_json="[]"
+            // }
+            // this.attachedCrimes = JSON.parse(attached_crimes_json)
+            // this.time = localStorage.getItem('crime_time')
+            // this.fatalities = localStorage.getItem('crime_fatalities')
         }
 
     },
