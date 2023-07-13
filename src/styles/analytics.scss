@@ -1,0 +1,101 @@
+@import "./variables.scss";
+
+#analytics-nav {
+    
+  background-color: $secondary-color;
+  .router-link-exact-active .side-nav-link p {
+    color: $primary-color;
+    fill: $primary-color;
+    font-weight: 600;
+  }
+  .router-link-exact-active .side-nav-link svg {
+    fill: $primary-color;
+    width: 2.1em;
+    height: 2.1em;
+    path {
+      fill: $primary-color;
+    }
+  }
+}
+.hotspot-view{
+    width:100vw ;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    margin-left: -$default-padding;
+    margin-right: -$default-padding;
+}
+#hotspot-map-view{
+    height: 100vh;
+}
+.basemap {
+    width: 100%;
+    height: 100%;
+}
+
+#hotspot-map-explorer{
+    // max-height: 35vh;
+    height: fit-content;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: $primary-color;
+    border-radius: 10px;
+    padding: $default-padding/2 $default-padding;
+    color: white;
+
+}
+
+.custom-marker{
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    background-color: $secondary-color;
+}
+
+#hotspot-map-explorer{
+    .section-title{
+        font-weight: 600;
+        font-size: 0.95em;
+        text-align: center;
+        color: white;
+    }
+    .close-button{
+        position: absolute;
+        right: 0;
+    }
+    .column{
+        margin: 1em 0;
+    }
+    .flex-wrap{
+        gap: 10px
+    }
+    .section-sub-title{
+        font-weight: 600;
+        font-size: 0.8em;
+        color: white;
+        margin-bottom: 0.5em;
+    }
+}
+.criminal-card{
+    
+    background-color: white;
+    color: $primary-color;
+    font-weight: 500;
+    font-size: small;
+    padding: $default-padding/3 $default-padding/1.5;
+    .profile-photo{
+        width: 2em;
+        height: 2em;
+        margin-right: 0.5em;
+    }
+}
+.crime-card-analysis{
+    background-color:$secondary-color
+}
+.station-card{
+    font-weight: 500;
+    font-size: smaller;
+}

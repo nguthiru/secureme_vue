@@ -11,6 +11,9 @@ import PasswordResetView from "../views/auth/PasswordReset.vue";
 import ApprovalView from "../views/auth/ApprovalView.vue";
 import PoliceView from "../views/police/HomeView.vue";
 import DataEntryView from "../views/police/DataEntry.vue";
+import AnalyticsView from "../views/analytics/AnalyticsView.vue";
+import HotspotView from "../views/analytics/HotspotView.vue";
+import NetworkView from "../views/analytics/NetworkView.vue";
 const routes = [
   {
     path: "/",
@@ -22,15 +25,15 @@ const routes = [
     name: "auth",
     component: AuthView,
     children: [
-      { 
+      {
         path: "register/",
         name: "register",
-        component: RegisterView
-       },
-      { 
-        path: "login/", 
-        name: "login", 
-        component: LoginView 
+        component: RegisterView,
+      },
+      {
+        path: "login/",
+        name: "login",
+        component: LoginView,
       },
       {
         path: "email/verify/",
@@ -46,32 +49,49 @@ const routes = [
       {
         path: "password/reset/code",
         name: "password_reset_code",
-        component: PassResetCodeView
+        component: PassResetCodeView,
       },
       {
         path: "password/reset/code/:token",
         name: "password_reset",
         component: PasswordResetView,
-        props: true
+        props: true,
       },
       {
-        path:"approval/request",
+        path: "approval/request",
         name: "approval_request",
-        component: ApprovalView
-      }
+        component: ApprovalView,
+      },
     ],
   },
   {
-    path:"/police",
+    path: "/police",
     name: "police_view",
     component: PoliceView,
-    children:[
+    children: [
       {
-        path:'data/',
+        path: "data/",
         name: "police_data_entry",
-        component: DataEntryView
+        component: DataEntryView,
+      },
+    ],
+  },
+  {
+    path: "/analytics",
+    name: "analytics_view",
+    component: AnalyticsView,
+    children: [
+      {
+        path: "hotspot/",
+        name: "hotspot_view",
+        component: HotspotView,
+      },
+      {
+        path: "network/",
+        name: "network_view",
+        component: NetworkView
       }
-    ]
+    ],
   },
   {
     path: "/dashboard",

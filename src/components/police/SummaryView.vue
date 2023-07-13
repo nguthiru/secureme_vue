@@ -81,9 +81,12 @@
 
         <div class="data_entry_footer">
             <button class="primary-btn" @click="pushCriminal">
-                <div class="row">
-                    <p>Push To SecureMe</p>
-                </div>
+                <LoadingButton :load="loading">
+
+                    <div class="row">
+                        <p>Push To SecureMe</p>
+                    </div>
+                </LoadingButton>
             </button>
         </div>
 
@@ -92,7 +95,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { useToast,} from 'vue-toastification'
-
+import LoadingButton from '../LoadingButton.vue';
 var toast = useToast();
 export default {
 
@@ -100,11 +103,20 @@ export default {
         ...mapGetters('police', ['getCrime', 'getCriminal', 'getAssociations', 'getCriminalExisted'])
 
     },
+    components:{
+        LoadingButton
+    },
+    data(){
+        return {
+            loading: false
+        }
+    },
 
 
     methods: {
 
         pushCriminal() {
+            this.loading=true
             this.$axios.post('police/criminal/add/', this.getCriminal).then(res => {
                 this.getCrime.attached_crimes.forEach(crime => {
 
@@ -137,11 +149,12 @@ export default {
                         throw(err)
                     })
                 })
-
+                this.loading=false;
                 toast.success("Criminal Uploaded Successfully")
                 this.$router.push({name:'police_view'})
 
             }).catch(err => {
+                this.loading=false;
                 console.log(err)
             })
         },

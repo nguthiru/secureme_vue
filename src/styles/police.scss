@@ -21,6 +21,7 @@
   }
 }
 .side-nav {
+  z-index: 2;
   background-color: $primary-color;
   width: fit-content;
   padding: $default-padding * 2;
@@ -37,6 +38,7 @@
 
 .side-nav-link {
   margin: 2em 0;
+  cursor: pointer;
 
   &:hover {
     color: white;
