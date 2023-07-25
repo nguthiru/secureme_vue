@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import police from "./police"
+import analysis from './analysis'
 export default createStore({
   state: {
     email: "",
@@ -48,6 +49,6 @@ export default createStore({
     }
   },
   modules: {
-    police
+    police,analysis
   },
 });

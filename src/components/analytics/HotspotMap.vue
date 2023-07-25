@@ -1,5 +1,5 @@
 <template>
-    <BaseMap @polygonDraw="polygonDraw" :hotspots="hotspots"/>
+    <BaseMap @polygonDraw="polygonDraw"  ref="baseref"/>
 </template>
 
 <script>
@@ -9,14 +9,20 @@ export default {
         BaseMap
     },
     props: {
-        hotspots: {
-            required: true,
-        }
+        
+        
+    },
+    computed:{
     },
     methods: {
         polygonDraw(polygon) {
             this.$emit('polygonDraw',polygon)
+        },
+        updateHotspots(){
+            this.$refs.baseref.updateHotspots()
         }
+    },
+    mounted(){
     }
 }
 </script>

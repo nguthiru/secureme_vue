@@ -1,15 +1,18 @@
 <template>
-    <div class="container">
+    <Teleport to="#app" v-if="showCriminalPopup">
+        <CriminalPopupExplorer :criminal="selectedCriminal" @close="showCriminalPopup = false" />
+    </Teleport>
 
+    <div class="container" id="hotspot-explorer-container">
         <div class="close-button" @click="close">
             <div class="row">
                 <i class="fas fa-times"></i>
                 Close
             </div>
-
+            
         </div>
         <div class="container" v-if="explorer_data !== null">
-
+            
             <p class="section-title">Hotspot details</p>
 
             <div class="column">
@@ -32,7 +35,8 @@
             <div class="column">
                 <p class="section-sub-title">Criminals in the area</p>
                 <div class="flex-wrap">
-                    <div class="criminal-card card" v-for="criminal in criminals" :key="criminal.id">
+                    <div class="criminal-card card" v-for="criminal in criminals" :key="criminal.id"
+                        @click="criminalCardClick(criminal)">
                         <div class="row">
 
                             <img :src="criminal.imageUrl" alt="" class="profile-photo small">
@@ -41,18 +45,23 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div>
     </div>
 </template>
 
 <script>
-
+import CriminalPopupExplorer from './CriminalPopupExplorer.vue'
 export default {
     name: 'HotspotExplorer',
+    components: {
+        CriminalPopupExplorer,
+    },
     data() {
         return {
+            showCriminalPopup: false,
+            selectedCriminal: null,
         }
     },
     computed: {
@@ -65,7 +74,9 @@ export default {
                 return e.crime
             })
 
-            return [... new Set(temp)]
+            console.log(temp)
+
+            return this.getUniqueValues(temp,'entity_id')
         },
         stations() {
 
@@ -74,15 +85,20 @@ export default {
 
                 return e.station
             })
-            return [... new Set(temp)]
+
+
+            return this.getUniqueValues(temp,'entity_id')
         },
         criminals() {
             let explorer_data = this.$props.explorer_data
             let temp = explorer_data.map(e => {
                 return e.criminal
             })
-            return [... new Set(temp)]
-        }
+            console.log(temp)
+            return this.getUniqueValues(temp,"idNumber")
+        },
+
+
     },
     props: {
         explorer_data: {
@@ -92,6 +108,16 @@ export default {
     methods: {
         close() {
             this.$emit('close')
+        },
+        criminalCardClick(e) {
+            this.selectedCriminal = e
+            this.showCriminalPopup = true
+        },
+        getUniqueValues(maps,search_field='id') {
+            const uniqueMaps = Array.from(new Set(maps.map(map => map[search_field]))).map(id => {
+                return maps.find(map => map[search_field] === id);
+            });
+            return uniqueMaps
         }
     }
 }

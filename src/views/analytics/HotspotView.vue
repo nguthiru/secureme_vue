@@ -1,11 +1,17 @@
 <template>
     <div class="hotspot-view">
         <section id="hotspot-map-view">
-            <HotspotMap @polygonDraw="polygonDraw" :hotspots="hotspot_data"></HotspotMap>
+            <HotspotMap @polygonDraw="polygonDraw" :hotspots="hotspot_data" :filters="filters"></HotspotMap>
         </section>
+        <section id="hotspot-map-filters">
+        </section>
+        <section id="hotspot-map-explorer">
+            <div class="column">
 
-        <section id="hotspot-map-explorer" @click="explorerClick">
-            <HotspotExplorer @close="showExplorer=false" v-if="showExplorer" :explorer_data="explorer_data" @click.stop ></HotspotExplorer>
+                <!-- <CriminalFilters @filter="filter" /> -->
+
+                <HotspotExplorer :explorer_data="explorer_data" @close="showExplorer=false" v-if="showExplorer" @click.stop></HotspotExplorer>
+            </div>
         </section>
     </div>
 </template>
@@ -13,45 +19,68 @@
 <script>
 import HotspotMap from '@/components/analytics/HotspotMap.vue';
 import HotspotExplorer from '@/components/analytics/HotspotExplorer.vue';
+// import CriminalFilters from '@/components/analytics/CrimeFilters.vue'
+
 export default {
     name: 'HotSpotView',
     components: {
         HotspotMap,
-        HotspotExplorer
+        HotspotExplorer,
+        // CriminalFilters
     },
-    data(){
+    data() {
         return {
-            showExplorer: false,
+            showExplorer: true,
             hotspot_data: null,
-            explorer_data: null
+            explorer_data: null,
+            filters: []
         }
     },
-    methods:{
-        polygonDraw(polygon){
-            this.$axios.post('analytics/crime/polygon/',{polygon:polygon}).then(res=>{
+    
+    methods: {
+        polygonDraw(polygon) {
+            this.$axios.post('analytics/crime/polygon/', { polygon: polygon }).then(res => {
                 this.explorer_data = res.data
-            }).catch(e=>{
+            }).catch(e => {
                 console.log(e)
             })
             this.showExplorer = true
         },
-        explorerClick(){
-            console.log(this.showExplorer)
-            if(this.showExplorer===false){
-                this.showExplorer=true
+        
+        explorerClick() {
+            if (this.showExplorer === false) {
+                this.showExplorer = true
             }
         },
-        getHotspots(){
+        getHotspots() {
 
-            this.$axios.get('analytics/crime/arrests/').then(res=>{
-                let data = res.data.map(e=>e.station_entity)
-                this.hotspot_data = data
-                console.log(this.hotspot_data)
+            this.$axios.get('analytics/crime/arrests/').then(res => {
+                
+                let data = res.data.map(e => e.station)
+                
+                this.$store.dispatch('analysis/setHotspots', data)
             })
+        },
+        filter(filters) {
+            if(filters.length!=0){
+
+                let data = {
+                    crimes: filters.map(e => e.id)
+                }
+                this.$axios.post('analytics/crime/arrests/filter/', data).then(res => {
+                    let data = res.data.map(e => e.station)
+                    this.$store.dispatch('analysis/setHotspots', data)
+                    
+                    
+                })
+            }
+            else{
+                this.getHotspots()
+            }
         }
     },
 
-    mounted(){
+    mounted() {
         this.getHotspots()
     }
 }

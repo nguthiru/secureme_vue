@@ -1,11 +1,12 @@
 <template>
-    <div id="mapContainer" class="basemap"></div>
+    <div :id="mapId" class="basemap"></div>
 </template>
 
 <script>
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+import { mapGetters } from "vuex";
 
 export default {
     name: "BaseMap",
@@ -17,93 +18,130 @@ export default {
     },
 
     props: {
-        hotspots: {
-            required: true,
+        markers: {
+
+        },
+        mapId: {
+            default: 'mapContainer'
         }
+    },
+    computed: {
+        ...mapGetters('analysis', ['getHotspots'])
     },
     watch: {
-        hotspots(newVal){
-            if(newVal!=null){
-                this.addHotspots()
+        getHotspots(newVal) {
+            if (newVal != null) {
+                this.updateHotspots()
+            }
+        },
+
+        markers(newVal) {
+            if (newVal != null) {
+                this.addMarkers()
             }
         }
+
     },
     methods: {
+        updateHotspots() {
+            this.map.on('load', () => {
+                this.addHotspots()
+            })
 
-        createMarkerElement(hotspot) {
-            console.log(hotspot)
-            const markerElement = document.createElement("div");
-            markerElement.className = "custom-marker";
-            markerElement.style.background = `red`;
-            return markerElement;
+            // this.map.on("onSourceAdded", () => {
+
+
+            //         console.log("HEYY")
+            //         this.map.getSource('hotspots').setData(this.createGeoJSON())
+
+            // })
+
+
+
+
         },
+
+        createGeoJSON() {
+            let _hotspots = this.getHotspots;
+
+
+            const hotspots = _hotspots.map(hotspot => {
+                return {
+                    name: hotspot.name,
+                    lat: hotspot.latitude,
+                    lng: hotspot.longitude,
+                };
+            });
+
+            const heatmapData = hotspots.map(hotspot => {
+                return {
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [hotspot.lng, hotspot.lat]
+                    },
+                    properties: {}
+                };
+            });
+
+            return heatmapData
+        },
+
         addHotspots() {
-            let _hotspots = this.$props.hotspots;
 
 
-                const hotspots = _hotspots.map(hotspot => {
-                    return {
-                        name: hotspot.name,
-                        lat: hotspot.latitude,
-                        lng: hotspot.longitude,
-                    };
-                });
 
-                const heatmapData = hotspots.map(hotspot => {
-                    return {
-                        type: "Feature",
-                        geometry: {
-                            type: "Point",
-                            coordinates: [hotspot.lng, hotspot.lat]
-                        },
-                        properties: {}
-                    };
-                });
+            this.map.addSource("hotspots", {
+                type: "geojson",
+                data: {
+                    type: "FeatureCollection",
+                    features: this.createGeoJSON()
+                }
+            });
 
-                this.map.on("load", () => {
-                    this.map.addSource("hotspots", {
-                        type: "geojson",
-                        data: {
-                            type: "FeatureCollection",
-                            features: heatmapData
-                        }
-                    });
+            this.map.addLayer({
+                id: "hotspot-density",
+                type: "heatmap",
+                source: "hotspots",
+                maxzoom: 15,
+                paint: {
+                    'heatmap-weight': {
+                        property: 'num_criminals',
+                        type: 'exponential',
+                        stops: [
+                            [1, 0],
+                            [62, 1]
+                        ]
+                    },
+                    "heatmap-intensity": {
+                        stops: [
+                            [0, 1],
+                            [15, 3]
+                        ],
+                        base: 2
+                    },
+                    "heatmap-color": [
+                        "interpolate",
+                        ["linear"],
+                        ["heatmap-density"],
+                        0,
+                        "rgba(0, 0, 255, 0)",
+                        0.2,
+                        "rgb(0, 0, 255)",
+                        0.4,
+                        "rgb(0, 255, 0)",
+                        0.6,
+                        "rgb(255, 255, 0)",
+                        0.8,
+                        "rgb(255, 165, 0)",
+                        1,
+                        "rgb(255, 0, 0)"
+                    ],
+                    "heatmap-opacity": 0.75
+                }
+            });
 
-                    this.map.addLayer({
-                        id: "hotspot-density",
-                        type: "heatmap",
-                        source: "hotspots",
-                        maxzoom: 15,
-                        paint: {
-                            "heatmap-intensity": {
-                                stops: [
-                                    [0, 1],
-                                    [15, 3]
-                                ],
-                                base: 2
-                            },
-                            "heatmap-color": [
-                                "interpolate",
-                                ["linear"],
-                                ["heatmap-density"],
-                                0,
-                                "rgba(0, 0, 255, 0)",
-                                0.2,
-                                "rgb(0, 0, 255)",
-                                0.4,
-                                "rgb(0, 255, 0)",
-                                0.6,
-                                "rgb(255, 255, 0)",
-                                0.8,
-                                "rgb(255, 165, 0)",
-                                1,
-                                "rgb(255, 0, 0)"
-                            ],
-                            "heatmap-opacity": 0.75
-                        }
-                    });
-                });
-            
+
 
         },
 
@@ -126,10 +164,10 @@ export default {
         mapboxgl.accessToken = this.accessToken;
 
         this.map = new mapboxgl.Map({
-            container: "mapContainer",
+            container: this.$props.mapId,
             style: "mapbox://styles/mapbox/streets-v11",
             center: [36.8219, -1.2921],
-            zoom: 10,
+            zoom: 6,
             maxBounds: [
                 [33.5019, -4.6769], // Southwest coordinates of Kenya
                 [41.8996, 5.0336]
@@ -159,9 +197,7 @@ export default {
 
         this.map.on('draw.create', this.onPolygonDraw)
 
-
         // this.addHeatmap();
-        // this.addHotspots();
     },
 }
 </script>

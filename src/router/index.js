@@ -14,6 +14,9 @@ import DataEntryView from "../views/police/DataEntry.vue";
 import AnalyticsView from "../views/analytics/AnalyticsView.vue";
 import HotspotView from "../views/analytics/HotspotView.vue";
 import NetworkView from "../views/analytics/NetworkView.vue";
+import NetworkExplorer from "../views/analytics/network/NetworkExplorer.vue";
+import NetworkExplorerDetail from "../views/analytics/network/NetworkExplorerDetail.vue";
+import TimeView from "../views/analytics/time_analysis/TimeAnalysis.vue";
 const routes = [
   {
     path: "/",
@@ -70,6 +73,10 @@ const routes = [
     component: PoliceView,
     children: [
       {
+        path: "",
+        redirect: { name: "police_data_entry" },
+      },
+      {
         path: "data/",
         name: "police_data_entry",
         component: DataEntryView,
@@ -82,15 +89,38 @@ const routes = [
     component: AnalyticsView,
     children: [
       {
+        path: "",
+        redirect: { name: "hotspot_view" },
+      },
+      {
         path: "hotspot/",
         name: "hotspot_view",
         component: HotspotView,
       },
       {
+        path: "time/",
+        name: "time_view",
+        component: TimeView,
+      },
+      {
         path: "network/",
         name: "network_view",
-        component: NetworkView
-      }
+        component: NetworkView,
+
+        children: [
+          {
+            path: "explore/",
+            name: "network_explorer",
+            component: NetworkExplorer,
+          },
+          {
+            path: "explore/:id",
+            name: "network_explorer_detail",
+            component: NetworkExplorerDetail,
+            props: true,
+          },
+        ],
+      },
     ],
   },
   {

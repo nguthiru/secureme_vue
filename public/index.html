@@ -8,7 +8,7 @@
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
-
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <title>SecureMe</title>
 </head>
 
@@ -20,5 +20,14 @@
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $("select").select2();
+  });
+
+</script>
 
 </html>

@@ -65,7 +65,6 @@ export default {
             this.$emit('detachAccomplice',e)
         },
         searchCriminals() {
-            console.log
             this.$axios.get('police/criminal/search/', {
                 params: {
                  'q': this.search

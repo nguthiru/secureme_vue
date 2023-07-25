@@ -11,7 +11,7 @@
                             fill="#1C274C" />
                     </svg>
                 </div>
-                <p>Home</p>
+                <!-- <p>Home</p> -->
             </div>
         </router-link>
 
@@ -34,7 +34,7 @@
                         <path d="M17.481 17.8267C17.5684 17.8558 17.653 17.884 17.735 17.9113Z" fill="#1C274C" />
                     </svg>
                 </div>
-                <p>Hotspot Analysis</p>
+                <!-- <p>Hotspot Analysis</p> -->
             </div>
         </router-link>
         <router-link :to="{ name: 'network_view' }">
@@ -70,21 +70,23 @@
                         </g>
                     </svg>
                 </div>
-                <p>Network Analysis</p>
+                <!-- <p>Network Analysis</p> -->
             </div>
         </router-link>
-        <!-- <div class="row side-nav-link">
-            <div class="side-nav-icon small-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M7 14L8.79689 11.8437C9.50894 10.9893 9.86496 10.562 10.3333 10.562C10.8017 10.562 11.1577 10.9893 11.8698 11.8437L12.1302 12.1563C12.8423 13.0107 13.1983 13.438 13.6667 13.438C14.135 13.438 14.4911 13.0107 15.2031 12.1563L17 10"
-                        stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
-                    <path
-                        d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-                        stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
+        <router-link :to="{ name: 'time_view' }">
+            <div class="row side-nav-link">
+                <div class="side-nav-icon small-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M7 14L8.79689 11.8437C9.50894 10.9893 9.86496 10.562 10.3333 10.562C10.8017 10.562 11.1577 10.9893 11.8698 11.8437L12.1302 12.1563C12.8423 13.0107 13.1983 13.438 13.6667 13.438C14.135 13.438 14.4911 13.0107 15.2031 12.1563L17 10"
+                            stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                        <path
+                            d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                            stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <!-- <p>Time Analysis</p> -->
             </div>
-            <p>Time Analysis Analysis</p>
-        </div> -->
+        </router-link>
     </aside>
 </template>
